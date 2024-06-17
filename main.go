@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time";
 
 	"github.com/pingu01/echomap/cmd/scanner"
 )
@@ -37,8 +36,6 @@ func main() {
 		return
 	}
 	
-	fmt.Printf("Starting Echomap 0.1.0a at %s\n", time.Now().Format("2006-01-02 15:04:05"))
-
     portSlice := make([]int, 0)
     for _, p := range strings.Split(ports, ",") {
         if port, err := strconv.Atoi(p); err == nil {
@@ -46,5 +43,5 @@ func main() {
         }
     }
 
-	scanner.scanPorts(host, portSlice)
+	scanner.ScanPorts(host, portSlice)
 }
