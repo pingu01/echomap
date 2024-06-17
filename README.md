@@ -7,7 +7,9 @@ EchoMap is a tool made with Golang for port scanning and network mapping.
 
 ## Installation
 ```bash
-go install github.com/pingu01/echomap
+git clone https://github.com/pingu01/echomap.git
+cd echomap
+go install
 ```
 
 # Usage
