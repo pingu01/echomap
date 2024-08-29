@@ -14,9 +14,11 @@ var defaultPorts = []int{20, 21, 22, 23, 25, 53, 80, 110, 443, 445, 1433, 3306, 
 func main() {
 	var host string
 	var ports string
+	var verbose bool
 
 	flag.StringVar(&host, "t", "", "Hostname or IP to scan")
 	flag.StringVar(&ports, "p", strings.Trim(strings.Join(strings.Fields(fmt.Sprint(defaultPorts)),","), "[]"), "Ports to scan")
+	flag.BoolVar(&verbose, "v", false, "Verbose output")
 
 	flag.Usage = func() {
 		fmt.Println("Usage: echomap -t=<hostname> -p=<port1,port2,...>")
@@ -44,5 +46,5 @@ func main() {
 
 	portSlice := utils.ParsePorts(ports)
 
-	scanner.ScanPorts(host, portSlice)
+	scanner.ScanPorts(host, portSlice, verbose)
 }

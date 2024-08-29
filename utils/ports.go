@@ -3,7 +3,6 @@ package utils
 import (
 	"strconv"
 	"strings"
-	"fmt"
 )
 
 func ParsePorts(ports string) []int {
@@ -28,6 +27,5 @@ func ParsePorts(ports string) []int {
 			}
 		}
 	}
-	fmt.Println(portSlice)
 	return portSlice
 }
