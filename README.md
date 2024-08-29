@@ -17,5 +17,5 @@ sudo mv echomap /usr/local/bin
 
 # Usage
 ```bash
-echomap -t <target> -p <port1,port2>
+echomap -t <target> -p <port1,port2...or range>
 ```
