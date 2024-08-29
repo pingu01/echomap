@@ -3,6 +3,7 @@ package utils
 import (
 	"strconv"
 	"strings"
+	"fmt"
 )
 
 func ParsePorts(ports string) []int {
@@ -10,23 +11,23 @@ func ParsePorts(ports string) []int {
 
 	for _, p := range strings.Split(ports, ",") {
 		if strings.Contains(p, "-") {
-			rangePorts := strings.Split(p, "-")
-			if len(rangePorts) == 2 {
-				startPort, err1 := strconv.Atoi(rangePorts[0])
-				endPort, err2 := strconv.Atoi(rangePorts[1])
-
-				if err1 == nil && err2 == nil {
+			rangeParts := strings.Split(p, "-")
+			if len(rangeParts) == 2 {
+				startPort, err1 := strconv.Atoi(strings.TrimSpace(rangeParts[0]))
+				endPort, err2 := strconv.Atoi(strings.TrimSpace(rangeParts[1]))
+				if err1 == nil && err2 == nil && startPort <= endPort {
+					// Add all ports within the range to the slice
 					for port := startPort; port <= endPort; port++ {
 						portSlice = append(portSlice, port)
 					}
 				}
 			}
 		} else {
-		// parse single port
-			if port, err := strconv.Atoi(p); err == nil {
+			if port, err := strconv.Atoi(strings.TrimSpace(p)); err == nil {
 				portSlice = append(portSlice, port)
 			}
 		}
 	}
+	fmt.Println(portSlice)
 	return portSlice
 }

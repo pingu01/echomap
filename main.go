@@ -19,27 +19,28 @@ func main() {
 	flag.StringVar(&ports, "p", strings.Trim(strings.Join(strings.Fields(fmt.Sprint(defaultPorts)),","), "[]"), "Ports to scan")
 
 	flag.Usage = func() {
-		fmt.Println("Usage: echomap -t=<hostname> -p=<port1,port2,... or range>")
+		fmt.Println("Usage: echomap -t=<hostname> -p=<port1,port2,...>")
 
 		fmt.Println("OPTIONS:")
 		fmt.Println("  -t :Target spefications, can be a hostname or an IP address")
-		fmt.Println("  -p :Port specifications, can be a single port, multiple ports separated by commas, or a range of ports (e.g., 80,443,8080-8090)\n")
+		fmt.Println("  -p :Port specifications, can be a single port or a range of ports separated by commas\n      Example: -p=80,443,8080")
 
 		fmt.Print("")
 
     }
 
-	flag.Parse()
-	
-	if ports == "" {
-		ports = strings.Trim(strings.Join(strings.Fields(fmt.Sprint(defaultPorts)),","), "[]")
+	// Parse the command-line flags
+	flag.Parse()  
+
+	if flag.NArg() > 0 {
+		fmt.Println("Usage: echomap -t=<hostname> -p=<port1,port2,...>")
+		return
 	}
 
-	// if there are no host, print the usage
-    if host == "" {
-        flag.Usage()
-        return
-    }
+	if host == "" {
+		fmt.Println(flag.Usage)
+		return
+	}
 
 	portSlice := utils.ParsePorts(ports)
 
