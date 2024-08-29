@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func parsePorts(ports string) []int {
+func ParsePorts(ports string) []int {
 	portSlice := make([]int, 0)
 
 	for _, p := range strings.Split(ports, ",") {

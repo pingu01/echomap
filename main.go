@@ -19,23 +19,29 @@ func main() {
 	flag.StringVar(&ports, "p", strings.Trim(strings.Join(strings.Fields(fmt.Sprint(defaultPorts)),","), "[]"), "Ports to scan")
 
 	flag.Usage = func() {
-		fmt.Println("Usage: echomap -t=<hostname> -p=<port1,port2,...>")
+		fmt.Println("Usage: echomap -t=<hostname> -p=<port1,port2,... or range>")
 
 		fmt.Println("OPTIONS:")
 		fmt.Println("  -t :Target spefications, can be a hostname or an IP address")
-		fmt.Println("  -p :Port specifications, can be a single port or a range of ports separated by commas\n      Example: -p=80,443,8080")
+		fmt.Println("  -p :Port specifications, can be a single port, multiple ports separated by commas, or a range of ports (e.g., 80,443,8080-8090)\n")
 
 		fmt.Print("")
 
     }
+
+	flag.Parse()
 	
-	// if there are no arguments, print the usage
+	if ports == "" {
+		ports = strings.Trim(strings.Join(strings.Fields(fmt.Sprint(defaultPorts)),","), "[]")
+	}
+
+	// if there are no host, print the usage
     if host == "" {
         flag.Usage()
         return
     }
 
-	portSlice := utils.parsePorts(ports)
+	portSlice := utils.ParsePorts(ports)
 
 	scanner.ScanPorts(host, portSlice)
 }
