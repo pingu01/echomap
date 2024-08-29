@@ -3,10 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/pingu01/echomap/cmd/scanner"
+	"github.com/pingu01/echomap/utils"
 )
 
 var defaultPorts = []int{20, 21, 22, 23, 25, 53, 80, 110, 443, 445, 1433, 3306, 3389, 8080}
@@ -28,20 +28,14 @@ func main() {
 		fmt.Print("")
 
     }
-
-	flag.Parse()  
-
-	if flag.NArg() > 0 {
-		fmt.Println("Usage: echomap -t=<hostname> -p=<port1,port2,...>")
-		return
-	}
 	
-    portSlice := make([]int, 0)
-    for _, p := range strings.Split(ports, ",") {
-        if port, err := strconv.Atoi(p); err == nil {
-            portSlice = append(portSlice, port)
-        }
+	// if there are no arguments, print the usage
+    if host == "" {
+        flag.Usage()
+        return
     }
+
+	portSlice := utils.parsePorts(ports)
 
 	scanner.ScanPorts(host, portSlice)
 }
